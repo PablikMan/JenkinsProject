@@ -1,0 +1,82 @@
+pipeline {
+    agent any
+
+    stages {
+        
+        stage('All') {
+            when{
+                expression{
+                    return env.LANGUAGE == 'All'
+                }
+            }
+            steps {
+                sh 'echo "class JavaFile{" > JavaFile.java' 
+                sh 'echo "public static void main(String args[]){" >> JavaFile.java'
+                sh '''
+                    echo 'System.out.println("Hello World!");' >> JavaFile.java
+                    '''
+                sh 'echo "}" >> JavaFile.java'
+                sh 'echo "}" >> JavaFile.java'
+                sh 'javac JavaFile.java'
+                sh 'java JavaFile'
+                sh '''
+                    echo 'print("Hello World!")' > pythonFile.py
+                    '''
+                sh 'python3 pythonFile.py'
+                sh 'echo "Hello World!" > file'
+                sh 'cat file'
+            }
+        }
+        
+        stage('Java'){
+            when{
+                expression{
+                    return env.LANGUAGE == 'Java'
+                }
+            }
+            steps{
+                sh 'echo "class JavaFile{" > JavaFile.java' 
+                sh 'echo "public static void main(String args[]){" >> JavaFile.java'
+                sh '''
+                    echo 'System.out.println("Hello World!");' >> JavaFile.java
+                    '''
+                sh 'echo "}" >> JavaFile.java'
+                sh 'echo "}" >> JavaFile.java'
+                sh 'javac JavaFile.java'
+                sh 'java JavaFile'
+            }
+        }
+        stage('Python'){
+            when{
+                expression{
+                    return env.LANGUAGE == 'Python'
+                }
+            }
+            steps{
+                sh '''
+                    echo 'print("Hello World!")' > pythonFile.py
+                    '''
+                sh 'python3 pythonFile.py'
+            }
+        }
+        stage('Bash'){
+            when{
+                expression{
+                    return env.LANGUAGE == 'Bash'
+                }
+            }
+            steps{
+                sh 'echo "Hello World!" > file'
+                sh 'cat file'
+            }
+        }
+    }
+    post{
+        success{
+            echo 'Passed :)'
+        }
+        failure{
+            echo 'Failed :c'
+        }
+    }
+}
