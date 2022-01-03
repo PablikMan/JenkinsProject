@@ -73,7 +73,7 @@ pipeline {
     }
     post{
         success{
-            echo 'Passed :)'
+            echo 'Passed!! :)'
         }
         failure{
             echo 'Failed :c'
