@@ -49,7 +49,7 @@ pipeline {
     post{
         success{
             sh 'env'
-            echo 'Passed! :)'
+            echo 'Passed :)'
         }
         failure{
             echo 'Failed :c'
