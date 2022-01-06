@@ -6,7 +6,7 @@ pipeline {
         stage('Java'){
             when{
                 expression{
-                    return env.LANGUAGE == 'Java' || env.LANGUAGE == 'All'
+                    return env.LANGUAGE == 'Java' || (env.GIT_BRANCH == 'origin/main' && env.LANGUAGE == 'All')
                 }
             }
             steps{
@@ -24,7 +24,7 @@ pipeline {
         stage('Python'){
             when{
                 expression{
-                    return env.LANGUAGE == 'Python' || env.LANGUAGE == 'All'
+                    return env.LANGUAGE == 'Python' || (env.GIT_BRANCH == 'origin/main' && env.LANGUAGE == 'All')
                 }
             }
             steps{
@@ -37,7 +37,7 @@ pipeline {
         stage('Bash'){
             when{
                 expression{
-                    return env.LANGUAGE == 'Bash' || env.LANGUAGE == 'All'
+                    return env.LANGUAGE == 'Bash' || (env.GIT_BRANCH == 'origin/main' && env.LANGUAGE == 'All')
                 }
             }
             steps{
