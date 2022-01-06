@@ -3,35 +3,10 @@ pipeline {
 
     stages {
         
-        stage('All') {
-            when{
-                expression{
-                    return env.LANGUAGE == 'All'
-                }
-            }
-            steps {
-                sh 'echo "class JavaFile{" > JavaFile.java' 
-                sh 'echo "public static void main(String args[]){" >> JavaFile.java'
-                sh '''
-                    echo 'System.out.println("Hello World!");' >> JavaFile.java
-                    '''
-                sh 'echo "}" >> JavaFile.java'
-                sh 'echo "}" >> JavaFile.java'
-                sh 'javac JavaFile.java'
-                sh 'java JavaFile'
-                sh '''
-                    echo 'print("Hello World!")' > pythonFile.py
-                    '''
-                sh 'python3 pythonFile.py'
-                sh 'echo "Hello World!" > file'
-                sh 'cat file'
-            }
-        }
-        
         stage('Java'){
             when{
                 expression{
-                    return env.LANGUAGE == 'Java'
+                    return env.LANGUAGE == 'Java' || GIT_BRANCH=origin/main
                 }
             }
             steps{
@@ -49,7 +24,7 @@ pipeline {
         stage('Python'){
             when{
                 expression{
-                    return env.LANGUAGE == 'Python'
+                    return env.LANGUAGE == 'Python' || GIT_BRANCH=origin/main
                 }
             }
             steps{
@@ -62,7 +37,7 @@ pipeline {
         stage('Bash'){
             when{
                 expression{
-                    return env.LANGUAGE == 'Bash'
+                    return env.LANGUAGE == 'Bash' || GIT_BRANCH=origin/main
                 }
             }
             steps{
