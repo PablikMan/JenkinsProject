@@ -3,30 +3,28 @@ pipeline {
 
     stages {
         
-        stage('All') {
-            when{
-                expression{
-                    return env.LANGUAGE == 'All'
-                }
-            }
-            steps {
-                sh 'echo "class JavaFile{" > JavaFile.java' 
-                sh 'echo "public static void main(String args[]){" >> JavaFile.java'
-                sh '''
-                    echo 'System.out.println("Hello World!");' >> JavaFile.java
-                    '''
-                sh 'echo "}" >> JavaFile.java'
-                sh 'echo "}" >> JavaFile.java'
-                sh 'javac JavaFile.java'
-                sh 'java JavaFile'
-                sh '''
-                    echo 'print("Hello World!")' > pythonFile.py
-                    '''
-                sh 'python3 pythonFile.py'
-                sh 'echo "Hello World!" > file'
-                sh 'cat file'
-            }
+       
+        when{
+            branch 'main'
         }
+        steps {
+            sh 'echo "class JavaFile{" > JavaFile.java' 
+            sh 'echo "public static void main(String args[]){" >> JavaFile.java'
+            sh '''
+                echo 'System.out.println("Hello World!");' >> JavaFile.java
+                '''
+            sh 'echo "}" >> JavaFile.java'
+            sh 'echo "}" >> JavaFile.java'
+            sh 'javac JavaFile.java'
+            sh 'java JavaFile'
+            sh '''
+                echo 'print("Hello World!")' > pythonFile.py
+                '''
+            sh 'python3 pythonFile.py'
+            sh 'echo "Hello World!" > file'
+            sh 'cat file'
+        }
+        
         
         stage('Java'){
             when{
