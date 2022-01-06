@@ -73,7 +73,7 @@ pipeline {
     }
     post{
         success{
-            env
+            sh 'env'
             echo 'Passed! :)'
         }
         failure{
